@@ -20,7 +20,7 @@ services:
       POSTGRES_USER: gastonfr24
       POSTGRES_PASSWORD: admin.123#
    ports:
-    - 5432:5432
+    - 5433:5432
    volumes:
       - .dbdata:/var/lib/postgresql
   

@@ -54,6 +54,7 @@ DJANGO_APPS = [
 ]
 
 PROJECT_APPS = [
+    'apps.user'
 ]
 
 THIRD_PARTY_APPS = [
@@ -162,19 +163,25 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
-
 STATIC_URL = '/static/'
-
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+AUTH_USER_MODEL = 'user.UserAccount'
 
 # Rest Framework
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('JWT', ),
+    "TOKEN_OBTAIN_SERIALIZER": "apps.user.serializers.MyTokenObtainPairSerializer",
+    "SIGNING_KEY": SECRET_KEY,
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ROTATE_REFRESFH_TOKENS':True,
+    'BLACKLIST_AFTER_ROTATION': True,
+}
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly'
