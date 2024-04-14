@@ -1,39 +1,39 @@
 version: '3.8'
 services:
   # Django App
-  backend_auth:
-   container_name: django_auth_api
+  backend_service:
+   container_name: django_service_api
    build: .
    env_file: .env
    volumes:
     - .:/app
    ports:
-    - 8000:8000
+    - 8001:8000
    depends_on:
     - db
     - redis
   db:
    image: postgres
-   container_name: django_auth_ddbb
+   container_name: django_service_ddbb
    restart: always
    environment:
-      POSTGRES_DB: auth_db
+      POSTGRES_DB: service_db
       POSTGRES_USER: gastonfr24
       POSTGRES_PASSWORD: admin.123#
    ports:
-    - 5433:5432
+    - 5434:5432
    volumes:
       - .dbdata:/var/lib/postgresql
   
   # Redis Cache
   redis:
     image: redis
-    container_name: django_auth_redis
+    container_name: django_service_redis
     ports:
-      - 6379:6379
+      - 6378:6379
   
   # # Event Queue Kafka
-  # queue_auth:
+  # queue_service:
   #   build: .
   #   command: >
   #     sh -c "python consumer.py"

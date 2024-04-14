@@ -54,7 +54,7 @@ DJANGO_APPS = [
 ]
 
 PROJECT_APPS = [
-    'apps.user'
+
 ]
 
 THIRD_PARTY_APPS = [
@@ -107,7 +107,7 @@ ASGI_APPLICATION = 'core.asgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'auth_db',
+        'NAME': 'service_db',
         'USER': 'gastonfr24',
         'PASSWORD': 'admin.123#',
         'HOST': 'db',
@@ -118,7 +118,7 @@ DATABASES = {
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://django_auth_redis:6379',
+        'LOCATION': 'redis://django_service_redis:6379',
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         },
@@ -169,8 +169,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'user.UserAccount'
-
 # Rest Framework
 SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('JWT', ),
@@ -185,9 +183,9 @@ SIMPLE_JWT = {
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+        'rest_framework.permissions.AllowAny'
     ],
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
+     'DEFAULT_AUTHENTICATION_CLASSES': (
+         "rest_framework_simplejwt.authentication.JWTStatelessUserAuthentication",
+     ),
 }
